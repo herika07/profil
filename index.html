@@ -215,6 +215,14 @@
     gap: 32px;
   }
 
+  /* Sections inside content to switch */
+  section.content-section {
+    display: none;
+  }
+  section.content-section.active {
+    display: block;
+  }
+
   /* Footer */
   footer.footer {
     height: auto;
@@ -448,6 +456,17 @@
     outline: 3px solid var(--primary);
     outline-offset: 2px;
   }
+
+  /* Profile Avatar */
+  .profile-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 9999px;
+    object-fit: cover;
+    box-shadow: 0 4px 12px var(--shadow);
+    margin-bottom: 16px;
+    border: 3px solid var(--primary);
+  }
 </style>
 </head>
 <body>
@@ -470,81 +489,142 @@
 <div id="app">
   <aside class="sidebar" aria-label="Primary navigation" role="navigation" tabindex="-1">
     <nav>
-      <a href="#" class="active" tabindex="0"><span class="material-icons" aria-hidden="true">home</span> Home</a>
-      <a href="#" tabindex="0"><span class="material-icons" aria-hidden="true">search</span> Search <span class="badge" aria-label="3 new items">3</span></a>
-      <a href="#" tabindex="0"><span class="material-icons" aria-hidden="true">person</span> Profile</a>
-      <a href="#" tabindex="0"><span class="material-icons" aria-hidden="true">settings</span> Settings <span class="badge" aria-label="1 pending setting">1</span></a>
-      <a href="#" tabindex="0"><span class="material-icons" aria-hidden="true">help</span> Help</a>
+      <a href="#" class="active" tabindex="0" data-target="home"><span class="material-icons" aria-hidden="true">home</span> Home</a>
+      <a href="#" tabindex="0" data-target="search"><span class="material-icons" aria-hidden="true">search</span> Search <span class="badge" aria-label="3 new items">3</span></a>
+      <a href="#" tabindex="0" data-target="profile"><span class="material-icons" aria-hidden="true">person</span> Profile</a>
+      <a href="#" tabindex="0" data-target="settings"><span class="material-icons" aria-hidden="true">settings</span> Settings <span class="badge" aria-label="1 pending setting">1</span></a>
+      <a href="#" tabindex="0" data-target="help"><span class="material-icons" aria-hidden="true">help</span> Help</a>
     </nav>
   </aside>
 
   <main class="content" role="main" tabindex="0" aria-label="Main content area">
-    <h1>Welcome to PremiumApp</h1>
-    <section aria-labelledby="section-form-title">
-      <h2 id="section-form-title">Advanced User Form</h2>
-      <form id="userForm" novalidate aria-live="polite" aria-relevant="additions removals">
-        <label for="emailInput">Email <sup aria-label="required">*</sup></label>
-        <input
-          type="email"
-          name="email"
-          id="emailInput"
-          autocomplete="email"
-          placeholder="john.doe@example.com"
-          aria-required="true"
-          aria-describedby="emailHelp errorEmail"
-          required
-        />
-        <div class="error-message" id="errorEmail" role="alert" aria-live="assertive" hidden></div>
-
-        <label for="nameInput">Full Name <sup aria-label="required">*</sup></label>
-        <input
-          type="text"
-          name="fullname"
-          id="nameInput"
-          autocomplete="name"
-          placeholder="John Doe"
-          aria-required="true"
-          aria-describedby="errorName"
-          required
-        />
-        <div class="error-message" id="errorName" role="alert" aria-live="assertive" hidden></div>
-
-        <label for="passwordInput">Password <sup aria-label="required">*</sup></label>
-        <input
-          type="password"
-          name="password"
-          id="passwordInput"
-          autocomplete="new-password"
-          placeholder="********"
-          aria-required="true"
-          aria-describedby="errorPassword"
-          required
-          minlength="8"
-        />
-        <div class="error-message" id="errorPassword" role="alert" aria-live="assertive" hidden></div>
-
-        <button type="submit" class="btn-primary" aria-live="polite" aria-busy="false">Submit</button>
-      </form>
-    </section>
-
-    <section aria-labelledby="section-info-title">
-      <h2 id="section-info-title">Latest Data Snapshot</h2>
-      <article role="region" aria-live="polite" aria-atomic="true" aria-relevant="additions" tabindex="0" style="margin-top:16px;">
-        <!-- Loading skeleton while data loads -->
-        <div id="loadingSkeleton" class="skeleton" style="height:160px; border-radius:16px;"></div>
-        <div id="dataContent" style="display:none;">
-          <img
-            loading="lazy"
-            src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/86c0fdb4-1121-4d63-a5b4-cbf25fa96b8f.png"
-            alt="Example chart showing sales data with purple colored bars"
-            width="320"
-            height="180"
-            style="border-radius:12px; display:block; margin-bottom:16px;"
+    <!-- Home Section -->
+    <section id="section-home" class="content-section active" aria-labelledby="home-title">
+      <h1 id="home-title">Welcome to PremiumApp</h1>
+      <section aria-labelledby="section-form-title">
+        <h2 id="section-form-title">Advanced User Form</h2>
+        <form id="userForm" novalidate aria-live="polite" aria-relevant="additions removals">
+          <label for="emailInput">Email <sup aria-label="required">*</sup></label>
+          <input
+            type="email"
+            name="email"
+            id="emailInput"
+            autocomplete="email"
+            placeholder="john.doe@example.com"
+            aria-required="true"
+            aria-describedby="emailHelp errorEmail"
+            required
           />
-          <p>This chart represents the latest sales data of our users, illustrating growth trends over time, optimized for fast decisions.</p>
-        </div>
-      </article>
+          <div class="error-message" id="errorEmail" role="alert" aria-live="assertive" hidden></div>
+
+          <label for="nameInput">Full Name <sup aria-label="required">*</sup></label>
+          <input
+            type="text"
+            name="fullname"
+            id="nameInput"
+            autocomplete="name"
+            placeholder="John Doe"
+            aria-required="true"
+            aria-describedby="errorName"
+            required
+          />
+          <div class="error-message" id="errorName" role="alert" aria-live="assertive" hidden></div>
+
+          <label for="passwordInput">Password <sup aria-label="required">*</sup></label>
+          <input
+            type="password"
+            name="password"
+            id="passwordInput"
+            autocomplete="new-password"
+            placeholder="********"
+            aria-required="true"
+            aria-describedby="errorPassword"
+            required
+            minlength="8"
+          />
+          <div class="error-message" id="errorPassword" role="alert" aria-live="assertive" hidden></div>
+
+          <button type="submit" class="btn-primary" aria-live="polite" aria-busy="false">Submit</button>
+        </form>
+      </section>
+
+      <section aria-labelledby="section-info-title">
+        <h2 id="section-info-title">Latest Data Snapshot</h2>
+        <article
+          role="region"
+          aria-live="polite"
+          aria-atomic="true"
+          aria-relevant="additions"
+          tabindex="0"
+          style="margin-top:16px;"
+        >
+          <!-- Loading skeleton while data loads -->
+          <div id="loadingSkeleton" class="skeleton" style="height:160px; border-radius:16px;"></div>
+          <div id="dataContent" style="display:none;">
+            <img
+              loading="lazy"
+              src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/4c4fb30d-9b0b-4763-b6ec-ec32a8797eb0.png"
+              alt="Example chart showing sales data with purple colored bars"
+              width="320"
+              height="180"
+              style="border-radius:12px; display:block; margin-bottom:16px;"
+            />
+            <p>
+              This chart represents the latest sales data of our users, illustrating growth trends over time, optimized
+              for fast decisions.
+            </p>
+          </div>
+        </article>
+      </section>
     </section>
+
+    <!-- Profile Section -->
+    <section id="section-profile" class="content-section" aria-labelledby="profile-title">
+      <h1 id="profile-title">User Profile</h1>
+      <div style="display: flex; gap: 32px; flex-wrap: wrap;">
+        <div style="flex: 1 1 260px; max-width: 260px; text-align: center;">
+          <img
+            src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/9304e0ea-0d99-439b-9b56-f8df6730b402.png"
+            alt="User avatar placeholder: round friendly face with blue background"
+            class="profile-avatar"
+            loading="lazy"
+            width="100"
+            height="100"
+          />
+          <p style="margin-top: 8px; font-weight: 700; font-size: 1.2rem;">John Doe</p>
+          <p style="color: var(--text-secondary); font-size: 0.9rem;">Administrator</p>
+          <button id="editAvatarBtn" class="btn-primary" style="margin-top: 12px; padding: 10px 20px; font-size: 0.9rem;">
+            <span class="material-icons" aria-hidden="true" style="vertical-align: middle;">edit</span> Edit Avatar
+          </button>
+        </div>
+        <div style="flex: 2 1 460px;">
+          <form id="profileForm" novalidate>
+            <label for="profileEmail">Email Address</label>
+            <input type="email" id="profileEmail" name="profileEmail" value="john.doe@example.com" required autocomplete="email" />
+            <div class="error-message" id="errorProfileEmail" role="alert" aria-live="assertive" hidden></div>
+
+            <label for="profileName">Full Name</label>
+            <input type="text" id="profileName" name="profileName" value="John Doe" required autocomplete="name" />
+            <div class="error-message" id="errorProfileName" role="alert" aria-live="assertive" hidden></div>
+
+            <label for="profileBio">Bio</label>
+            <textarea id="profileBio" name="profileBio" rows="4" placeholder="Tell us about yourself…"></textarea>
+
+            <label for="profileTheme">Preferred Theme</label>
+            <select id="profileTheme" name="profileTheme" aria-describedby="themeDesc">
+              <option value="light">Light</option>
+              <option value="dark">Dark</option>
+            </select>
+            <small id="themeDesc" style="color: var(--text-secondary); font-size: 0.85rem;">Select your preferred
+              theme for the application</small>
+
+            <button type="submit" class="btn-primary" style="margin-top: 16px;">Save Profile</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- Additional sections like Settings and Help could be added here -->
   </main>
 </div>
 
@@ -581,6 +661,8 @@
     const loadingSkeleton = document.getElementById('loadingSkeleton');
     const dataContent = document.getElementById('dataContent');
     const toastContainer = document.getElementById('toast-container');
+    const profileForm = document.getElementById('profileForm');
+    const editAvatarBtn = document.getElementById('editAvatarBtn');
 
     // Dummy notifications data
     let notifications = [
@@ -626,6 +708,38 @@
       }
     });
 
+    // Sidebar navigation link clicks show/hide corresponding sections
+    const navLinks = document.querySelectorAll('aside.sidebar nav a');
+    const sections = document.querySelectorAll('main.content section.content-section');
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        // Remove active class from all links
+        navLinks.forEach(l => l.classList.remove('active'));
+        // Add active class to clicked link
+        link.classList.add('active');
+        // Get target section
+        const target = link.getAttribute('data-target');
+        // Show correct section, hide others
+        sections.forEach(section => {
+          if(section.id === `section-${target}`) {
+            section.classList.add('active');
+            section.setAttribute('tabindex', '0');
+            section.focus();
+          } else {
+            section.classList.remove('active');
+            section.removeAttribute('tabindex');
+          }
+        });
+        // Close sidebar on mobile after selection
+        if(window.innerWidth <= 767 && sidebar.classList.contains('open')){
+          sidebar.classList.remove('open');
+          sidebarToggle.setAttribute('aria-expanded', 'false');
+        }
+      });
+    });
+
     // Manage notification badge
     function updateNotifBadge() {
       const unreadCount = notifications.filter(n => !n.read).length;
@@ -645,7 +759,7 @@
       alert('This is a demo notification system. Implement notification panel here.');
     });
 
-    // Simple form validation
+    // Simple form validation for userForm
     function setError(element, message) {
       element.classList.add('error');
       const errorDiv = document.getElementById(`error${element.id.charAt(0).toUpperCase() + element.id.slice(1)}`);
@@ -714,6 +828,64 @@
       } else {
         showToast('Please fix the errors in the form.', 'error');
       }
+    });
+
+
+    // Profile form validation and saving
+    function setProfileError(element, message) {
+      element.classList.add('error');
+      const errorDiv = document.getElementById(`error${element.id.charAt(0).toUpperCase() + element.id.slice(1)}`);
+      if (errorDiv) {
+        errorDiv.textContent = message;
+        errorDiv.hidden = false;
+      }
+      element.setAttribute('aria-invalid', 'true');
+    }
+    function clearProfileError(element) {
+      element.classList.remove('error');
+      const errorDiv = document.getElementById(`error${element.id.charAt(0).toUpperCase() + element.id.slice(1)}`);
+      if (errorDiv) {
+        errorDiv.textContent = '';
+        errorDiv.hidden = true;
+      }
+      element.removeAttribute('aria-invalid');
+    }
+
+    profileForm.addEventListener('submit', e => {
+      e.preventDefault();
+      const emailInput = profileForm.profileEmail;
+      const nameInput = profileForm.profileName;
+      const bioInput = profileForm.profileBio;
+      const themeSelect = profileForm.profileTheme;
+
+      let valid = true;
+      clearProfileError(emailInput);
+      clearProfileError(nameInput);
+
+      if (!emailInput.value.trim()) {
+        setProfileError(emailInput, 'Email is required');
+        valid = false;
+      } else if (!validateEmail(emailInput.value.trim())) {
+        setProfileError(emailInput, 'Email format is invalid');
+        valid = false;
+      }
+      if (!nameInput.value.trim()) {
+        setProfileError(nameInput, 'Full name is required');
+        valid = false;
+      }
+
+      if (valid) {
+        // Save preferences, for example theme to localStorage and apply immediately
+        applyTheme(themeSelect.value);
+        showToast('Profile saved successfully!', 'check_circle');
+      } else {
+        showToast('Please fix the errors in your profile.', 'error');
+      }
+    });
+
+    // Simulate avatar edit button
+    editAvatarBtn.addEventListener('click', () => {
+      alert('Avatar edit function not implemented in demo.');
     });
 
     // Loading simulated async data content
